@@ -1,0 +1,13 @@
+{
+    "rules": {
+        "color-hex-case": "lower",
+        "color-hex-length": "short",
+        "comment-empty-line-before": "always",
+        "selector-no-combinator": true,
+        "selector-no-id": true,
+        "string-quotes": "double",
+        "selector-no-type": true,
+        "selector-no-universal": true,
+        "selector-no-vendor-prefix": true
+    }
+}
