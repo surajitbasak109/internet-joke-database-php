@@ -13,11 +13,21 @@ ini_set('display_errors', 1);
 
 require_once __DIR__.'/../helpers/dbFunctions.php';
 
-$jokes = allJokes();
+$result = findAll('jokes');
+foreach ($result as $joke) {
+    $author = findById('authors', 'id', $joke->author_id);
+
+    $jokes[] = [
+        'id'       => $joke->id,
+        'joketext' => $joke->joketext,
+        'name'     => $author->name,
+        'email'    => $author->email,
+    ];
+}
 
 $title = 'Joke list';
 
-$totalJokes = totalJokes();
+$totalJokes = total("jokes");
 
 // Start the buffer.
 ob_start();

@@ -10,7 +10,7 @@
 
 require_once __DIR__.DIRECTORY_SEPARATOR.'../helpers/dbFunctions.php';
 if (!empty($_POST['_method']) && $_POST['_method'] == 'DELETE' && !empty($_POST['id'])) {
-    deleteJoke($_POST['id']);
+    delete("jokes", "id", $_POST['id']);
     header('Location: jokes.php');
 } else {
     $title = 'Unable to delete';

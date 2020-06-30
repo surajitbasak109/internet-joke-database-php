@@ -11,7 +11,14 @@ require_once __DIR__.DIRECTORY_SEPARATOR.'../helpers/dbFunctions.php';
 
 if (!empty($_POST['joketext'])) {
     $date = new DateTime();
-    insertJoke($_POST['joketext'], 1, $date->format('Y-m-d'));
+    insert(
+        "jokes",
+        [
+         "joketext"  => $_POST['joketext'],
+         "author_id" => 1,
+         "jokedate"  => $date->format('Y-m-d'),
+        ]
+    );
     header('Location: jokes.php');
 } else {
     $title = 'Add a new joke';

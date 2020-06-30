@@ -10,11 +10,22 @@
 
 require_once __DIR__.DIRECTORY_SEPARATOR.'../helpers/dbFunctions.php';
 
-if (!empty($_POST['joketext'])) {
-    updateJoke($_POST['joketext'], 1, $_POST['jokeid']);
+if (!empty($_POST['joketext']) && !empty($_POST['jokeid'])) {
+    update(
+        "jokes",
+        [
+         'id' => $_POST['jokeid'],
+        ],
+        [
+         "joketext"  => $_POST['joketext'],
+         'author_id' => 1,
+        ]
+    );
     header('Location: jokes.php');
 } else {
-    $joke = getJoke($_GET['id']);
+    if (!empty($_GET['id'])) {
+        $joke = findById('jokes', 'id', $_GET['id']);
+    }
 
     $title = 'Edit joke';
 
