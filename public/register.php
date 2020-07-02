@@ -3,23 +3,13 @@
  * PHP Joke Page
  *
  * @package    Internet Jokes Machine
- * @subpackage Index.php
+ * @subpackage register.php
  * @author     Surajit Basak<surajitbasak109@gmail.com>
  * @copyright  734006 Techcet Blog Pty Ltd
  */
 
 use classes\DatabaseTable;
-use controllers\JokeController;
-
-function loadTemplate($templateFileName, $variables = [])
-{
-    extract($variables);
-
-    ob_start();
-
-    include __DIR__ . '/../views/' . $templateFileName;
-    return ob_get_clean();
-}
+use controllers\RegisterController;
 
 try {
     require_once __DIR__ . '/../classes/DatabaseTable.php';
@@ -28,12 +18,12 @@ try {
     $jokesTable = new DatabaseTable('jokes', 'id');
     $authorsTable = new DatabaseTable('authors', 'id');
 
-    $jokeController = new JokeController($jokesTable, $authorsTable);
+    $registerController = new RegisterController($authorsTable);
 
     $action = $_GET['action'] ?? "home";
 
     if ($action == strtolower($action)) {
-        $page = $jokeController->$action();
+        $page = $registerController->$action();
     } else {
         http_response_code(301);
         header('location: index.php?action='.strtolower($action));

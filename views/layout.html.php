@@ -29,10 +29,10 @@
                         <a href="index.php">Home</a>
                     </li>
                     <li class="<?= strpos($_SERVER['SCRIPT_NAME'], "jokes") !== false ? "active" : "" ?>">
-                        <a href="jokes.php">Jokes List</a>
+                        <a href="index.php?action=list">Jokes List</a>
                     </li>
                     <li class="<?= strpos($_SERVER['SCRIPT_NAME'], "addjoke") !== false ? "active" : "" ?>">
-                        <a href="addjoke.php">Add a new Joke</a>
+                        <a href="index.php?action=edit">Add a new Joke</a>
                     </li>
                 </ul>
              </nav>

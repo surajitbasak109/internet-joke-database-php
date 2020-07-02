@@ -9,7 +9,7 @@
  **/
 ?>
 
-<p><?php echo total('jokes'); ?> jokes has been submitted to the Internet Joke Database.</p>
+<p><?php echo $totalJokes; ?> jokes has been submitted to the Internet Joke Database.</p>
 
 <?php
 foreach ($jokes as $joke) : ?>
@@ -31,9 +31,9 @@ foreach ($jokes as $joke) : ?>
     </p>
 
     <div class="cell">
-        <a class="btn btn-primary" href="editjoke.php?id=<?php echo $joke['id']; ?>">Edit</a>
+        <a class="btn btn-primary" href="index.php?action=edit&id=<?php echo $joke['id']; ?>">Edit</a>
     </div>
-    <form action="deletejoke.php" method="POST">
+    <form action="index.php?action=delete" method="POST">
         <input type="hidden" name="_method" value="DELETE">
         <input type="hidden" name="id" value="<?php echo $joke['id']; ?>">
         <input type="submit" class="btn btn-secondary" value="Delete">
