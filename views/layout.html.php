@@ -13,7 +13,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="jokes.css">
+        <link rel="stylesheet" href="/jokes.css">
         <title><?php echo $title; ?></title>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     </head>
@@ -25,15 +25,25 @@
             </header>
            <nav class="layout-top-nav">
                 <ul class="nav-menu">
-                    <li class="<?= strpos($_SERVER['SCRIPT_NAME'], "index") !== false ? "active" : "" ?>">
-                        <a href="index.php">Home</a>
+                    <li class="<?= strpos($_SERVER['REQUEST_URI'], "index") !== false ? "active" : "" ?>">
+                        <a href="/">Home</a>
                     </li>
-                    <li class="<?= strpos($_SERVER['SCRIPT_NAME'], "jokes") !== false ? "active" : "" ?>">
-                        <a href="index.php?action=list">Jokes List</a>
+                    <li class="<?= strpos($_SERVER['REQUEST_URI'], "list") !== false ? "active" : "" ?>">
+                        <a href="/jokes/list">Jokes List</a>
                     </li>
-                    <li class="<?= strpos($_SERVER['SCRIPT_NAME'], "addjoke") !== false ? "active" : "" ?>">
-                        <a href="index.php?action=edit">Add a new Joke</a>
+                    <li class="<?= strpos($_SERVER['REQUEST_URI'], "edit") !== false ? "active" : "" ?>">
+                        <a href="/jokes/edit">Add a new Joke</a>
                     </li>
+
+                    <?php if ($loggedIn) : ?>
+                    <li>
+                        <a href="/logout">Log out</a>
+                    </li>
+                    <?php else : ?>
+                    <li>
+                        <a href="/login">Log in</a>
+                    </li>
+                    <?php endif; ?>
                 </ul>
              </nav>
         </header>

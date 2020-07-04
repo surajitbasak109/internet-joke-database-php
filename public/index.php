@@ -8,49 +8,16 @@
  * @copyright  734006 Techcet Blog Pty Ltd
  */
 
-use classes\DatabaseTable;
-use controllers\JokeController;
-
-function loadTemplate($templateFileName, $variables = [])
-{
-    extract($variables);
-
-    ob_start();
-
-    include __DIR__ . '/../views/' . $templateFileName;
-    return ob_get_clean();
-}
-
+include __DIR__ . '/../includes/autoload.php';
 try {
-    require_once __DIR__ . '/../classes/DatabaseTable.php';
-    require_once __DIR__ . '/../controllers/JokeController.php';
-
-    $jokesTable = new DatabaseTable('jokes', 'id');
-    $authorsTable = new DatabaseTable('authors', 'id');
-
-    $jokeController = new JokeController($jokesTable, $authorsTable);
-
-    $action = $_GET['action'] ?? "home";
-
-    if ($action == strtolower($action)) {
-        $page = $jokeController->$action();
-    } else {
-        http_response_code(301);
-        header('location: index.php?action='.strtolower($action));
-    }
-
-    $title = $page['title'];
-
-    if (isset($page['variables'])) {
-        $output = loadTemplate($page['view'], $page['variables']);
-    } else {
-        $output = loadTemplate($page['view']);
-    }
+    $route = ltrim(strtok($_SERVER['REQUEST_URI'], '?'), '/');
+    
+    $entrypoint = new \Ninja\EntryPoint($route, $_SERVER['REQUEST_METHOD'], new \Ijdb\IjdbRoutes());
+    $entrypoint->run();
 } catch (PDOException $e) {
     $title = 'An error has occurred.';
 
     $output = 'Database error: ' . $e->getMessage() . ' in '
      . $e->getFile() . ':' . $e->getLine();
+    include __DIR__ . '/../views/layout.html.php';
 }//end try
-
-include __DIR__ . '/../views/layout.html.php';

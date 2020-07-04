@@ -8,7 +8,7 @@
  * @copyright  734006 Techcet Blog Pty Ltd
  */
 
-namespace classes;
+namespace Ninja;
 
 class DB
 {

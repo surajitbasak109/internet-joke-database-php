@@ -8,7 +8,7 @@
  * @copyright  734006 Techcet Blog Pty Ltd
  */
 
-namespace classes;
+ namespace Ninja;
 
 /*
  * DatabaseTable class
@@ -53,7 +53,7 @@ class DatabaseTable
      */
     public function connect()
     {
-        $config   = include dirname(__DIR__).DIRECTORY_SEPARATOR.'config/database.php';
+        $config   = include __DIR__. '/../../config/database.php';
         $dsn      = $config['driver'].':host='.$config['host'].';dbname='.$config['dbname'].';charset='.$config['charset'].';';
         $username = $config['username'];
         $passwd   = $config['password'];
@@ -109,6 +109,23 @@ class DatabaseTable
     public function findById(string $value)
     {
         $query = 'SELECT * FROM `'.$this->table.'` WHERE `'.$this->primaryKey.'` = :value';
+        $parameters = [':value' => $value];
+        $query = $this->query($query, $parameters);
+        return $query->fetch();
+    }//end findById()
+
+    /*
+     * Returns an object of data from the specified table.
+     *
+     * @param string $column Find by column name.
+     * @param string $value Find row by given value.
+     *
+     * @return array Returns an array of objects.
+     */
+
+    public function find(string $column, string $value)
+    {
+        $query = 'SELECT * FROM `'.$this->table.'` WHERE `'.$column.'` = :value';
         $parameters = [':value' => $value];
         $query = $this->query($query, $parameters);
         return $query->fetch();
